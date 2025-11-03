@@ -1,0 +1,31 @@
+# Virtual environment
+env/
+zioenv/
+envs/
+.venv/
+*.pyc
+__pycache__/
+
+# Environment variables file
+.env
+
+# Django migrations
+*/migrations/*.pyc
+*/migrations/__pycache__/
+
+# Django stuff:
+*.log
+local_settings.py
+db.sqlite3
+staticfiles/
+media/
+
+# IDEs and editors
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# System files
+.DS_Store
+Thumbs.db

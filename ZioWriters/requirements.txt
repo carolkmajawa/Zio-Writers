@@ -1,0 +1,5 @@
+Django>=5.2
+djangorestframework
+djangorestframework-authtoken
+python-dotenv
+psycopg2-binary   # only if you use PostgreSQL
