@@ -11,7 +11,7 @@ def get_access_token():
     """
     auth_url = f"{settings.MPESA_SANDBOX_URL}/oauth/v1/generate?grant_type=client_credentials"
     response = requests.get(auth_url, auth=HTTPBasicAuth(settings.MPESA_CONSUMER_KEY, settings.MPESA_CONSUMER_SECRET))
-    response.raise_for_status()  # Raises HTTPError for bad responses
+    response.raise_for_status()
     access_token = response.json().get("access_token")
     return access_token
 

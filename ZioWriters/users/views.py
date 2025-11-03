@@ -55,13 +55,11 @@ class LogoutView(APIView):
         return Response({"detail": "Logged out successfully"}, status=200)
 
 def create_password_reset_code(user):
-    # Invalidate existing valid codes before creating a new one
     PasswordResetCode.objects.filter(user=user, expires_at__gte=timezone.now()).delete()
-    code = f"{random.randint(0, 999999):06d}"  # 6-digit zero-padded numeric code
+    code = f"{random.randint(0, 999999):06d}" 
     expires_at = timezone.now() + timezone.timedelta(minutes=10)
     PasswordResetCode.objects.create(user=user, code=code, expires_at=expires_at)
     return code
-
 
 class RequestPasswordReset(generics.GenericAPIView):
     serializer_class = ForgotPasswordSerializer
@@ -130,12 +128,10 @@ class VerifyResetCodeAndChangePassword(generics.GenericAPIView):
 
         user.password = make_password(new_password)
         user.save()
-        reset_code.delete()  # Invalidate the code after successful reset
+        reset_code.delete() 
 
         return Response({"message": "Password reset successful."}, status=status.HTTP_200_OK)
 
-
-# Additional views for email verification and code verification (optional)
 class PasswordResetVerifyCodeView(generics.GenericAPIView):
     serializer_class = CodeVerificationSerializer
     permission_classes = [AllowAny]
@@ -143,7 +139,6 @@ class PasswordResetVerifyCodeView(generics.GenericAPIView):
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        # Implement code verification logic if needed
         return Response({"detail": "Code verified"}, status=status.HTTP_200_OK)
 
 class SendEmailVerificationView(generics.GenericAPIView):
@@ -153,7 +148,6 @@ class SendEmailVerificationView(generics.GenericAPIView):
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        # Implement sending email verification token logic
         return Response({"detail": "Verification email sent"}, status=status.HTTP_200_OK)
 
 class VerifyEmailTokenView(generics.GenericAPIView):
@@ -163,7 +157,6 @@ class VerifyEmailTokenView(generics.GenericAPIView):
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        # Implement email token verification logic
         return Response({"detail": "Email verified"}, status=status.HTTP_200_OK)
 
 class CodeVerificationView(generics.GenericAPIView):
@@ -173,5 +166,4 @@ class CodeVerificationView(generics.GenericAPIView):
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        # Implement generic code or OTP verification logic
         return Response({"detail": "Code verified"}, status=status.HTTP_200_OK)
