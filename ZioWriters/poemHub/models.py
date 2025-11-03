@@ -17,11 +17,8 @@ class Poem(models.Model):
     currency = models.CharField(max_length=3, null=True, blank=True)
     is_deleted = models.BooleanField(default=False)
     
-    phone_number = PhoneNumberField(null=True, blank=True)  # New field for user's phone number
-    country = models.CharField(max_length=100, null=True, blank=True)  # New field for country
-
-    # other models remain unchanged
-
+    phone_number = PhoneNumberField(null=True, blank=True)  
+    country = models.CharField(max_length=100, null=True, blank=True)  
 
 class Image(models.Model):
     poem = models.ForeignKey(Poem, on_delete=models.CASCADE, related_name='images')
